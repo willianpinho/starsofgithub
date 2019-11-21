@@ -17,14 +17,14 @@ protocol RepositoriesBusinessLogic {
 }
 
 protocol RepositoriesDataStore {
-    var someSDKObject: [SomeSDKObject]? { get set }
+    var repositories: [Repository]? { get set }
 }
 
 class RepositoriesInteractor: RepositoriesBusinessLogic, RepositoriesDataStore {
     
     var presenter: RepositoriesPresentationLogic?
     var worker: RepositoriesWorker?
-    var someSDKObject: [SomeSDKObject]?
+    var repositories: [Repository]?
     
     // MARK: Fetch
     
@@ -37,9 +37,9 @@ class RepositoriesInteractor: RepositoriesBusinessLogic, RepositoriesDataStore {
         #endif
         
         self.worker?.fetchRepositories(completionHandler: { (result) in
-            self.someSDKObject = result
+            self.repositories = result
             
-            let response = Repositories.Fetch.Response(someSDKObject: result)
+            let response = Repositories.Fetch.Response(repositories: result)
             self.presenter?.presentRepositories(response: response)
         })
     }

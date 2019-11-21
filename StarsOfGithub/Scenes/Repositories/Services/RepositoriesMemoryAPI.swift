@@ -15,11 +15,11 @@ import UIKit
 class RepositoriesMemoryAPI: RepositoriesStoreProtocol {
     
     static var objects = [
-        RepositoriesObject(title: "Title 1", subtitle: "Subtitle 1"),
-        RepositoriesObject(title: "Title 2", subtitle: "Subtitle 2")
+        Repository(title: "Title 1", subtitle: "Subtitle 1"),
+        Repository(title: "Title 2", subtitle: "Subtitle 2")
     ]
     
-    func fetchRepositories(completionHandler: @escaping (() throws -> [RepositoriesObject]) -> Void) {
+    func fetchRepositories(completionHandler: @escaping (() throws -> [Repository]) -> Void) {
         completionHandler { return type(of: self).objects }
     }
     

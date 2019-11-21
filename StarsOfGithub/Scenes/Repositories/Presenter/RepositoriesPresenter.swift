@@ -23,17 +23,17 @@ class RepositoriesPresenter: RepositoriesPresentationLogic {
     // MARK: Present Repositories
     
     func presentRepositories(response: Repositories.Fetch.Response) {
-        var displayedSomething: [Repositories.Fetch.ViewModel.DisplaySomething] = []
+        var repositories: [Repositories.Fetch.ViewModel.Repository] = []
         
-        for object in response.someSDKObject {
-            let display = Repositories.Fetch.ViewModel.DisplaySomething(
+        for object in response.repositories {
+            let display = Repositories.Fetch.ViewModel.Repository(
                 title: object.title,
                 subtitle: object.title
             )
-            displayedSomething.append(display)
+            repositories.append(display)
         }
         
-        let viewModel = Repositories.Fetch.ViewModel(displaySomething: displayedSomething)
+        let viewModel = Repositories.Fetch.ViewModel(repositories: repositories)
         self.viewController?.displayRepositories(viewModel: viewModel)
     }
     

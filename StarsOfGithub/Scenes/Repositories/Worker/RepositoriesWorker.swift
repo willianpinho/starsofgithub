@@ -13,7 +13,7 @@
 import UIKit
 
 protocol RepositoriesStoreProtocol {
-    func fetchRepositories(completionHandler: @escaping (() throws -> [SomeSDKObject]) -> Void)
+    func fetchRepositories(completionHandler: @escaping (() throws -> [Repository]) -> Void)
 }
 
 class RepositoriesWorker {
@@ -24,8 +24,8 @@ class RepositoriesWorker {
         self.storeProtocol = storeProtocol
     }
     
-    func fetchRepositories(completionHandler: @escaping ([SomeSDKObject]) -> Void) {
-        self.storeProtocol.fetchRepositories  { (result: () throws -> [SomeSDKObject]) -> Void in
+    func fetchRepositories(completionHandler: @escaping ([Repository]) -> Void) {
+        self.storeProtocol.fetchRepositories  { (result: () throws -> [Repository]) -> Void in
             do {
                 let result = try result()
                 completionHandler(result)

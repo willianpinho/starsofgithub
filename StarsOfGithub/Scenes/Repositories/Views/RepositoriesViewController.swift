@@ -21,8 +21,7 @@ class RepositoriesViewController: UITableViewController, RepositoriesDisplayLogi
     var interactor: RepositoriesBusinessLogic?
     var router: (NSObjectProtocol & RepositoriesRoutingLogic & RepositoriesDataPassing)?
     
-    private var displayedSomething: [Repositories.Fetch.ViewModel.DisplaySomething] = []
-    private let reuseIdentifier = "cell"
+    private var repositories: [Repositories.Fetch.ViewModel.Repository] = []
     
     // MARK: Object lifecycle
     
@@ -34,7 +33,7 @@ class RepositoriesViewController: UITableViewController, RepositoriesDisplayLogi
     
     @available(*, unavailable)
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     // MARK: Setup
@@ -72,14 +71,13 @@ class RepositoriesViewController: UITableViewController, RepositoriesDisplayLogi
     // MARK: - Display
     
     func displayRepositories(viewModel: Repositories.Fetch.ViewModel) {
-        self.displayedSomething = viewModel.displaySomething
+        self.repositories = viewModel.repositories
         self.tableView.reloadData()
     }
     
     private func displayView() {
         self.title = "View title"
         
-        self.view.backgroundColor = UIColor.Palette.Light.white2
     }
     
     private func displayTableView() {
@@ -94,15 +92,12 @@ extension RepositoriesViewController {
     
     override func tableView(_ tableView: UITableView,
                             numberOfRowsInSection section: Int) -> Int {
-        return self.displayedSomething.count
+        return self.repositories.count
     }
     
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: self.reuseIdentifier, for: indexPath)
-        cell.textLabel?.text = self.displayedSomething[indexPath.row].title
-        cell.detailTextLabel?.text = self.displayedSomething[indexPath.row].subtitle
-        return cell
+        return UITableViewCell()
     }
     
 }

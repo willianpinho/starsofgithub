@@ -14,7 +14,7 @@ import UIKit
 
 class RepositoriesAPI: RepositoriesStoreProtocol {
     
-    func fetchRepositories(completionHandler: @escaping (() throws -> [SomeSDKObject]) -> Void) {
+    func fetchRepositories(completionHandler: @escaping (() throws -> [Repository]) -> Void) {
         
     }
     

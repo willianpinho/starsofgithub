@@ -12,7 +12,7 @@
 
 import UIKit
 
-struct SomeSDKObject: Codable {
+struct Repository: Codable {
     var title: String
     var subtitle: String
 }
@@ -23,14 +23,14 @@ enum Repositories {
         struct Request {
         }
         struct Response {
-            var someSDKObject: [SomeSDKObject]
+            var repositories: [Repository]
         }
         struct ViewModel {
-            struct DisplaySomething {
+            struct Repository {
                 var title: String
                 var subtitle: String
             }
-            var displaySomething: [DisplaySomething]
+            var repositories: [Repository]
         }
     }
     
