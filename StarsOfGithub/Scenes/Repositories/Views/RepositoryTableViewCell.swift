@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 
 class RepositoryTableViewCell: UITableViewCell {
     private enum Constants {
@@ -18,6 +18,7 @@ class RepositoryTableViewCell: UITableViewCell {
         didSet {
             repositoryNameLabel.text = repository?.fullName
             repositoryStarCountLabel.text = repository?.stargazersCount.description
+            ownerImageImageView.sd_setImage(with: URL(string: repository?.owner.avatarUrl ?? ""), placeholderImage: UIImage(named: "person")?.withRenderingMode(.alwaysOriginal))
         }
     }
     
@@ -86,11 +87,13 @@ class RepositoryTableViewCell: UITableViewCell {
     }()
     
     private lazy var ownerImageImageView : UIImageView = {
-        let image = UIImage(named: "person")?.withRenderingMode(.alwaysOriginal)
         let imageView = UIImageView()
-        imageView.image = image
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = imageView.frame.size.height / 2
+        imageView.layer.masksToBounds = true
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layoutIfNeeded()
         return imageView
     }()
     

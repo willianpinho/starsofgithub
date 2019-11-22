@@ -161,6 +161,7 @@ extension RepositoriesViewController {
         let currentRepository = self.repositories[indexPath.row]
         cell.repository = currentRepository
         cell.selectionStyle = .none
+        cell.layoutIfNeeded()
         return cell
     }
     
