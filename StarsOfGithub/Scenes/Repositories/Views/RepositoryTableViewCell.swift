@@ -11,10 +11,7 @@ import UIKit
 
 class RepositoryTableViewCell: UITableViewCell {
     private enum Constants {
-        static let viewHeight: CGFloat = 100.0
         static let stackSpacing: CGFloat = 4.0
-        static let shadowRadius: CGFloat = 18.0
-        static let shadowOpacity: Float = 0.05
     }
     
     var repository : Repositories.Fetch.ViewModel.Repository? {
@@ -38,6 +35,7 @@ class RepositoryTableViewCell: UITableViewCell {
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textAlignment = .left
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -56,6 +54,7 @@ class RepositoryTableViewCell: UITableViewCell {
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textAlignment = .left
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -67,7 +66,7 @@ class RepositoryTableViewCell: UITableViewCell {
         ])
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .equalCentering
         stackView.spacing = Constants.stackSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
@@ -79,8 +78,8 @@ class RepositoryTableViewCell: UITableViewCell {
             self.horizontalStackView
         ])
         stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.distribution = .fillEqually
         stackView.spacing = Constants.stackSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
@@ -103,7 +102,7 @@ class RepositoryTableViewCell: UITableViewCell {
         ])
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.distribution = .fill
+        stackView.distribution = .fillProportionally
         stackView.spacing = Constants.stackSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
@@ -113,43 +112,81 @@ class RepositoryTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(self.principalStackView)
         contentView.layoutSubviews()
+        contentView.layoutIfNeeded()
         self.displayConstraints()
     }
     
     
     func displayConstraints() {
-        self.displayPrincipalConstraints()
-        self.displayVerticalConstraints()
+        NSLayoutConstraint.activate([
+            self.principalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            self.principalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            self.principalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+            self.principalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 5)
+        ])
+        self.displayRepositoryImageImageViewConstraints()
+        self.displayVerticalStackViewContraints()
+        self.displayOwnerImageViewContraints()
+    }
+    
+    func displayRepositoryImageImageViewConstraints() {
+        NSLayoutConstraint.activate([
+            self.repositoryImageImageView.leadingAnchor.constraint(equalTo: self.principalStackView.leadingAnchor, constant: 5),
+            self.repositoryImageImageView.trailingAnchor.constraint(equalTo: self.verticalStackView.leadingAnchor, constant: 20),
+            self.repositoryImageImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5),
+            self.repositoryImageImageView.widthAnchor.constraint(equalTo: self.repositoryImageImageView.heightAnchor, multiplier: 1)
+        ])
+    }
+    
+    func displayVerticalStackViewContraints() {
+        NSLayoutConstraint.activate([
+            self.verticalStackView.topAnchor.constraint(equalTo: self.principalStackView.topAnchor, constant: 5),
+            self.verticalStackView.leadingAnchor.constraint(equalTo: self.repositoryImageImageView.trailingAnchor, constant: 10),
+            self.verticalStackView.trailingAnchor.constraint(equalTo: self.ownerImageImageView.leadingAnchor, constant: -5),
+            self.verticalStackView.bottomAnchor.constraint(equalTo: self.principalStackView.bottomAnchor, constant: 5),
+        ])
+        self.displayNameLabelConstraints()
         self.displayHorizontalConstraints()
     }
     
-    func displayPrincipalConstraints() {
+    func displayOwnerImageViewContraints() {
         NSLayoutConstraint.activate([
-            self.principalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            self.principalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            self.principalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            self.principalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 10),
-            self.principalStackView.heightAnchor.constraint(equalToConstant: 100),
-            self.repositoryImageImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7),
-            self.repositoryImageImageView.widthAnchor.constraint(equalTo: self.repositoryImageImageView.heightAnchor, multiplier: 1),
-            self.ownerImageImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7),
-            self.ownerImageImageView.widthAnchor.constraint(equalTo: self.ownerImageImageView.heightAnchor, multiplier: 1),
+            self.ownerImageImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5),
+            self.ownerImageImageView.widthAnchor.constraint(equalTo: self.ownerImageImageView.heightAnchor, multiplier: 1)
         ])
     }
     
-    func displayVerticalConstraints() {
+    func displayNameLabelConstraints() {
         NSLayoutConstraint.activate([
-            self.repositoryNameLabel.leadingAnchor.constraint(equalTo: self.verticalStackView.leadingAnchor, constant: 5),
-            self.repositoryNameLabel.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor, constant: 5)
+            self.repositoryNameLabel.topAnchor.constraint(equalTo: self.verticalStackView.topAnchor, constant: 20),
+            self.repositoryNameLabel.bottomAnchor.constraint(equalTo: self.horizontalStackView.topAnchor, constant: -10),
+            self.repositoryNameLabel.leadingAnchor.constraint(equalTo: self.repositoryImageImageView.trailingAnchor, constant: 0),
+            self.repositoryNameLabel.trailingAnchor.constraint(equalTo: self.ownerImageImageView.leadingAnchor, constant: 0)
         ])
     }
-
+    
     func displayHorizontalConstraints() {
+        self.displayStarImageViewConstraints()
+        self.displayStarCountLabelConstraints()
+    }
+    
+    func displayStarImageViewConstraints() {
         NSLayoutConstraint.activate([
+            self.repositoryStarImageView.leadingAnchor.constraint(equalTo: self.repositoryImageImageView.trailingAnchor, constant: 0),
+            self.repositoryStarImageView.trailingAnchor.constraint(equalTo: self.repositoryStarCountLabel.leadingAnchor, constant: -10),
+            self.repositoryStarImageView.topAnchor.constraint(equalTo: self.horizontalStackView.topAnchor, constant: 0),
+            self.repositoryStarImageView.bottomAnchor.constraint(equalTo: self.horizontalStackView.bottomAnchor, constant: -20),
             self.repositoryStarImageView.widthAnchor.constraint(equalToConstant: 10.0),
-            self.repositoryStarImageView.heightAnchor.constraint(equalTo: self.repositoryStarImageView.widthAnchor, multiplier: 1),
-            self.repositoryStarCountLabel.leadingAnchor.constraint(equalTo: self.repositoryStarImageView.trailingAnchor, constant: 5),
-            self.repositoryStarCountLabel.trailingAnchor.constraint(equalTo: self.horizontalStackView.trailingAnchor, constant: 5)
+            self.repositoryStarImageView.heightAnchor.constraint(equalTo: self.repositoryStarImageView.widthAnchor, multiplier: 1)
+        ])
+    }
+    
+    func displayStarCountLabelConstraints() {
+        NSLayoutConstraint.activate([
+            self.repositoryStarCountLabel.leadingAnchor.constraint(equalTo: self.repositoryStarImageView.trailingAnchor, constant: 0),
+            self.repositoryStarCountLabel.trailingAnchor.constraint(equalTo: self.ownerImageImageView.leadingAnchor, constant: 0),
+            self.repositoryStarCountLabel.topAnchor.constraint(equalTo: self.horizontalStackView.topAnchor, constant: 0),
+            self.repositoryStarCountLabel.bottomAnchor.constraint(equalTo: self.horizontalStackView.bottomAnchor, constant: -20)
         ])
     }
     

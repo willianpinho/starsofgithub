@@ -12,29 +12,44 @@
 
 import UIKit
 
-protocol RepositoriesStoreProtocol {
-    func fetchRepositories(completionHandler: @escaping (() throws -> [Repository]) -> Void)
-}
-
 class RepositoriesWorker {
     
-    private var storeProtocol: RepositoriesStoreProtocol
+    var repositoriesStore: RepositoriesStoreProtocol
     
-    init(storeProtocol: RepositoriesStoreProtocol) {
-        self.storeProtocol = storeProtocol
+    init(repositoriesStore: RepositoriesStoreProtocol)
+    {
+        self.repositoriesStore = repositoriesStore
     }
     
-    func fetchRepositories(completionHandler: @escaping ([Repository]) -> Void) {
-        self.storeProtocol.fetchRepositories  { (result: () throws -> [Repository]) -> Void in
+    func fetchRepositories(completionHandler: @escaping ([Repository]) -> Void)
+    {
+        repositoriesStore.fetchRepositories { (repositories: [Repository]) -> Void in
             do {
-                let result = try result()
-                completionHandler(result)
+                DispatchQueue.main.async {
+                    completionHandler(repositories)
+                }
             } catch {
-                completionHandler([])
+                DispatchQueue.main.async {
+                    completionHandler([])
+                }
             }
         }
     }
     
+}
+
+protocol RepositoriesStoreProtocol {
+    func fetchRepositories(completionHandler: @escaping ([Repository], RepositoriesError?) -> Void)
+    func fetchRepositories(completionHandler: @escaping RepositoriesStoreFetchRepositoriesCompletionHandler)
+    func fetchRepositories(completionHandler: @escaping ([Repository]) -> Void)
+}
+
+typealias RepositoriesStoreFetchRepositoriesCompletionHandler = (RepositoriesStoreResult<[Repository]>) -> Void
+
+enum RepositoriesStoreResult<U>
+{
+    case Success(result: U)
+    case Failure(error: RepositoriesError)
 }
 
 // MARK: Repositories store error

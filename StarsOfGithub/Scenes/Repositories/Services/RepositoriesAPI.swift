@@ -11,11 +11,39 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class RepositoriesAPI: RepositoriesStoreProtocol {
+    var repositories: [Repository] = []
     
-    func fetchRepositories(completionHandler: @escaping (() throws -> [Repository]) -> Void) {
-        
+    func fetchRepositories(completionHandler: @escaping ([Repository], RepositoriesError?) -> Void) {
     }
+    
+    func fetchRepositories(completionHandler: @escaping RepositoriesStoreFetchRepositoriesCompletionHandler) {
+    }
+    
+    func fetchRepositories(completionHandler: @escaping ([Repository]) -> Void) {
+        guard let url = URL(string: "https://api.github.com/search/repositories?q=language:swift&sort=stars&page=1&per_page=30") else {return}
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let dataResponse = data,
+                error == nil else {
+                    completionHandler(self.repositories)
+                    return }
+            do{
+                let json = try JSON(data: dataResponse)
+                let items =  json["items"].arrayValue.map {$0}
+                for i in items {
+                    let repository = try Repository(json: i)
+                    self.repositories.append(repository!)
+                }
+                completionHandler(self.repositories)
+            } catch let parsingError {
+                completionHandler(self.repositories)
+            }
+        }
+        task.resume()
+    }
+    
+    
     
 }

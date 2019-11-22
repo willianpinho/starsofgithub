@@ -11,12 +11,39 @@
 //
 
 import UIKit
+import SwiftyJSON
+
+enum SerializationError: Error {
+    case missing(String)
+    case invalid(String, Any)
+}
 
 struct Repository: Codable {
     var fullName : String
     var htmlUrl: String
     var stargazersCount: Int
     var owner: Owner
+    
+    init?(json: JSON) throws {
+        guard let fullName = json["full_name"].string,
+            let htmlUrl = json["html_url"].string,
+            let stargazersCount = json["stargazers_count"].int,
+            let ownerLogin = json["owner"]["login"].string,
+            let ownerAvatarUrl = json["owner"]["avatar_url"].string else {
+                return nil
+        }
+        self.fullName = fullName
+        self.htmlUrl = htmlUrl
+        self.stargazersCount = stargazersCount
+        self.owner = Owner(login: ownerLogin, avatarUrl: ownerAvatarUrl)
+    }
+    
+    init(fullName: String, htmlUrl: String, stargazersCount: Int, owner: Owner) {
+        self.fullName = fullName
+        self.htmlUrl = htmlUrl
+        self.stargazersCount = stargazersCount
+        self.owner = owner
+    }
 }
 
 struct Owner: Codable {

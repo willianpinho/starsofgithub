@@ -30,16 +30,17 @@ class RepositoriesInteractor: RepositoriesBusinessLogic, RepositoriesDataStore {
     
     func fetchRepositories(request: Repositories.Fetch.Request) {
         
-        #if DEBUG
-            self.worker = RepositoriesWorker(storeProtocol: RepositoriesMemoryAPI())
-        #else
-            self.worker = RepositoriesWorker(storeProtocol: RepositoriesAPI())
-        #endif
-        
-        self.worker?.fetchRepositories(completionHandler: { (result) in
-            self.repositories = result
-            
-            let response = Repositories.Fetch.Response(repositories: result)
+//        #if DEBUG
+//        self.worker = RepositoriesWorker(repositoriesStore: RepositoriesMemoryAPI())
+//        #else
+//        self.worker = RepositoriesWorker(repositoriesStore: RepositoriesAPI())
+//        #endif
+        self.worker = RepositoriesWorker(repositoriesStore: RepositoriesAPI())
+
+    
+        self.worker?.fetchRepositories(completionHandler: { (repositories) in
+            self.repositories = repositories
+            let response = Repositories.Fetch.Response(repositories: repositories)
             self.presenter?.presentRepositories(response: response)
         })
     }

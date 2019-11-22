@@ -13,14 +13,22 @@
 import UIKit
 
 class RepositoriesMemoryAPI: RepositoriesStoreProtocol {
-    
-    static var objects = [
-        Repository(fullName: "willianpinho/starsofgithub", htmlUrl: "https://github.com/willianpinho/starsofgithub", stargazersCount: 0, owner: Owner(login: "willianpinho", avatarUrl: "https://avatars3.githubusercontent.com/u/1058177?s=460&v=4"))
+   var objects = [
+       Repository(fullName: "willianpinho/starsofgithub", htmlUrl: "https://github.com/willianpinho/starsofgithub", stargazersCount: 0, owner: Owner(login: "willianpinho", avatarUrl: "https://avatars3.githubusercontent.com/u/1058177?s=460&v=4"))
 
-    ]
+   ]
     
-    func fetchRepositories(completionHandler: @escaping (() throws -> [Repository]) -> Void) {
-        completionHandler { return type(of: self).objects }
+    func fetchRepositories(completionHandler: @escaping ([Repository], RepositoriesError?) -> Void) {
+        
+    }
+    
+    func fetchRepositories(completionHandler: @escaping RepositoriesStoreFetchRepositoriesCompletionHandler) {
+        
+    }
+    
+    func fetchRepositories(completionHandler: @escaping ([Repository]) -> Void)
+    {
+        completionHandler(self.objects)
     }
     
 }

@@ -54,11 +54,11 @@ class RepositoriesViewController: UITableViewController, RepositoriesDisplayLogi
     func setupTableView(tableView: UITableView) {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .none
+        tableView.separatorStyle = .singleLine
         tableView.bounces = false
         tableView.allowsMultipleSelection = false
         tableView.isUserInteractionEnabled = true
-        tableView.estimatedRowHeight = 85.0
+        tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
     }
     
@@ -66,6 +66,7 @@ class RepositoriesViewController: UITableViewController, RepositoriesDisplayLogi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.displayView()
         self.registerTableViewCell(tableView: self.tableView)
         self.setupTableView(tableView: self.tableView)
         self.fetchRepositories()
@@ -90,7 +91,7 @@ class RepositoriesViewController: UITableViewController, RepositoriesDisplayLogi
     }
     
     private func displayView() {
-        self.title = "View title"
+        self.title = "Stars of Github"
         
     }
 }
@@ -109,11 +110,12 @@ extension RepositoriesViewController {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: cellId) as! RepositoryTableViewCell
         let currentRepository = self.repositories[indexPath.row]
         cell.repository = currentRepository
+        cell.selectionStyle = .none
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        return 100
         
     }
 }
