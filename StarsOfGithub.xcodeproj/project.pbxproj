@@ -10,6 +10,8 @@
 		101560FA3764B29915941A9D /* Pods_StarsOfGithub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780E9A875D0C9AEAAA1CF286 /* Pods_StarsOfGithub.framework */; };
 		4931CF609E8390757B791F78 /* Pods_StarsOfGithub_StarsOfGithubUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF8CF80BDF3CF97FFFF095D /* Pods_StarsOfGithub_StarsOfGithubUITests.framework */; };
 		6D4910224D482345B4695D62 /* Pods_StarsOfGithubTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B7434FE1B7398761B649BF9 /* Pods_StarsOfGithubTests.framework */; };
+		B77A5CA3238736C4005C3DCC /* RepositoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77A5CA2238736C3005C3DCC /* RepositoryTableViewCell.swift */; };
+		B7A62A60238757D900BC7492 /* NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A62A5F238757D900BC7492 /* NSLayoutConstraint.swift */; };
 		B7BA828B23870B6D00CDC0C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA828A23870B6D00CDC0C9 /* AppDelegate.swift */; };
 		B7BA828D23870B6D00CDC0C9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA828C23870B6D00CDC0C9 /* SceneDelegate.swift */; };
 		B7BA829423870B7000CDC0C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7BA829323870B7000CDC0C9 /* Assets.xcassets */; };
@@ -50,6 +52,8 @@
 		780E9A875D0C9AEAAA1CF286 /* Pods_StarsOfGithub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StarsOfGithub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EF8CF80BDF3CF97FFFF095D /* Pods_StarsOfGithub_StarsOfGithubUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StarsOfGithub_StarsOfGithubUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9825159A7F5E84923C462007 /* Pods-StarsOfGithubTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StarsOfGithubTests.debug.xcconfig"; path = "Target Support Files/Pods-StarsOfGithubTests/Pods-StarsOfGithubTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B77A5CA2238736C3005C3DCC /* RepositoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTableViewCell.swift; sourceTree = "<group>"; };
+		B7A62A5F238757D900BC7492 /* NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraint.swift; sourceTree = "<group>"; };
 		B7BA828723870B6D00CDC0C9 /* StarsOfGithub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarsOfGithub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7BA828A23870B6D00CDC0C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B7BA828C23870B6D00CDC0C9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,8 +125,23 @@
 				9825159A7F5E84923C462007 /* Pods-StarsOfGithubTests.debug.xcconfig */,
 				20E3F193A35CD21B06E117C7 /* Pods-StarsOfGithubTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		B7A62A5D238757B200BC7492 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B7A62A5E238757CB00BC7492 /* Extensions */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		B7A62A5E238757CB00BC7492 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B7A62A5F238757D900BC7492 /* NSLayoutConstraint.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		B7BA827E23870B6C00CDC0C9 = {
@@ -150,6 +169,7 @@
 		B7BA828923870B6D00CDC0C9 /* StarsOfGithub */ = {
 			isa = PBXGroup;
 			children = (
+				B7A62A5D238757B200BC7492 /* Utils */,
 				B7BA82BA23870B8A00CDC0C9 /* Scenes */,
 				B7BA828A23870B6D00CDC0C9 /* AppDelegate.swift */,
 				B7BA828C23870B6D00CDC0C9 /* SceneDelegate.swift */,
@@ -227,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				B7BA82C123870BC800CDC0C9 /* RepositoriesViewController.swift */,
+				B77A5CA2238736C3005C3DCC /* RepositoryTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -463,6 +484,8 @@
 				B7BA828B23870B6D00CDC0C9 /* AppDelegate.swift in Sources */,
 				B7BA82CA23870BC800CDC0C9 /* RepositoriesAPI.swift in Sources */,
 				B7BA82C923870BC800CDC0C9 /* RepositoriesViewController.swift in Sources */,
+				B77A5CA3238736C4005C3DCC /* RepositoryTableViewCell.swift in Sources */,
+				B7A62A60238757D900BC7492 /* NSLayoutConstraint.swift in Sources */,
 				B7BA828D23870B6D00CDC0C9 /* SceneDelegate.swift in Sources */,
 				B7BA82C523870BC800CDC0C9 /* RepositoriesPresenter.swift in Sources */,
 				B7BA82C623870BC800CDC0C9 /* RepositoriesWorker.swift in Sources */,

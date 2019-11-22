@@ -13,8 +13,15 @@
 import UIKit
 
 struct Repository: Codable {
-    var title: String
-    var subtitle: String
+    var fullName : String
+    var htmlUrl: String
+    var stargazersCount: Int
+    var owner: Owner
+}
+
+struct Owner: Codable {
+    var login: String
+    var avatarUrl: String
 }
 
 enum Repositories {
@@ -27,11 +34,12 @@ enum Repositories {
         }
         struct ViewModel {
             struct Repository {
-                var title: String
-                var subtitle: String
+                var fullName : String
+                var htmlUrl: String
+                var stargazersCount: Int
+                var owner: Owner
             }
             var repositories: [Repository]
         }
     }
-    
 }

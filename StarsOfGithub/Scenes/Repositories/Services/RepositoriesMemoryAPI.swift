@@ -15,8 +15,8 @@ import UIKit
 class RepositoriesMemoryAPI: RepositoriesStoreProtocol {
     
     static var objects = [
-        Repository(title: "Title 1", subtitle: "Subtitle 1"),
-        Repository(title: "Title 2", subtitle: "Subtitle 2")
+        Repository(fullName: "willianpinho/starsofgithub", htmlUrl: "https://github.com/willianpinho/starsofgithub", stargazersCount: 0, owner: Owner(login: "willianpinho", avatarUrl: "https://avatars3.githubusercontent.com/u/1058177?s=460&v=4"))
+
     ]
     
     func fetchRepositories(completionHandler: @escaping (() throws -> [Repository]) -> Void) {

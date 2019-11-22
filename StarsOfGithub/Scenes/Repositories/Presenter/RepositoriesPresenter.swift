@@ -26,10 +26,7 @@ class RepositoriesPresenter: RepositoriesPresentationLogic {
         var repositories: [Repositories.Fetch.ViewModel.Repository] = []
         
         for object in response.repositories {
-            let display = Repositories.Fetch.ViewModel.Repository(
-                title: object.title,
-                subtitle: object.title
-            )
+            let display = Repositories.Fetch.ViewModel.Repository(fullName: object.fullName, htmlUrl: object.htmlUrl, stargazersCount: object.stargazersCount, owner: object.owner)
             repositories.append(display)
         }
         

@@ -20,14 +20,13 @@ class RepositoriesViewController: UITableViewController, RepositoriesDisplayLogi
     
     var interactor: RepositoriesBusinessLogic?
     var router: (NSObjectProtocol & RepositoriesRoutingLogic & RepositoriesDataPassing)?
-    
     private var repositories: [Repositories.Fetch.ViewModel.Repository] = []
+    let cellId = "RepositoryTableViewCell"
     
     // MARK: Object lifecycle
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        
         self.setup()
     }
     
@@ -52,13 +51,28 @@ class RepositoriesViewController: UITableViewController, RepositoriesDisplayLogi
         router.dataStore = interactor
     }
     
+    func setupTableView(tableView: UITableView) {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.bounces = false
+        tableView.allowsMultipleSelection = false
+        tableView.isUserInteractionEnabled = true
+        tableView.estimatedRowHeight = 85.0
+        tableView.rowHeight = UITableView.automaticDimension
+    }
+    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.registerTableViewCell(tableView: self.tableView)
+        self.setupTableView(tableView: self.tableView)
         self.fetchRepositories()
-        self.displayTableView()
+    }
+    
+    func registerTableViewCell(tableView: UITableView) {
+        tableView.register(RepositoryTableViewCell.self, forCellReuseIdentifier: cellId)
     }
     
     // MARK: Fetch
@@ -79,11 +93,6 @@ class RepositoriesViewController: UITableViewController, RepositoriesDisplayLogi
         self.title = "View title"
         
     }
-    
-    private func displayTableView() {
-        
-    }
-    
 }
 
 // MARK: - Delegate and data source
@@ -97,7 +106,14 @@ extension RepositoriesViewController {
     
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: cellId) as! RepositoryTableViewCell
+        let currentRepository = self.repositories[indexPath.row]
+        cell.repository = currentRepository
+        return cell
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+        
+    }
 }
